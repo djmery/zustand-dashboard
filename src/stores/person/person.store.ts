@@ -32,13 +32,15 @@ const storeAPI: StateCreator<PersonState & Actions, [["zustand/devtools", never]
 export const usePersonStore = create<PersonState & Actions>()(
 
     devtools(
+
         persist(
             storeAPI,
             {
                 name: 'person-storage',
                 //storage: customSessionStorage,
                 storage: firebaseStorage
-            }))
+            })
+    )
     //es el nombre del storage que yo le quiero dar por defecto en el localstorage
     //el middleware persist se encarga de buscar el person-storage, establecerlo, actualizarlo y no hay que hacer más configuración.
 );
