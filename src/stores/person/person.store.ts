@@ -2,6 +2,7 @@ import { type StateCreator, create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 //mport { customSessionStorage } from "../storages/session.storage";
 import { firebaseStorage } from "../storages/firebase.storage";
+import { useWeddingBoundStore } from "../wedding";
 
 
 interface PersonState {
@@ -44,3 +45,9 @@ export const usePersonStore = create<PersonState & Actions>()(
     //es el nombre del storage que yo le quiero dar por defecto en el localstorage
     //el middleware persist se encarga de buscar el person-storage, establecerlo, actualizarlo y no hay que hacer más configuración.
 );
+
+usePersonStore.subscribe((state) => {
+    const { firstName, lastName } = state;
+    useWeddingBoundStore.getState().setFirstName(firstName);
+    useWeddingBoundStore.getState().setLastName(lastName);
+})
